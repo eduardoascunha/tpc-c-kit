@@ -5,17 +5,15 @@ tool.
 
 ## Start
 
-1. Open `docs/how-to-run-postgres.txt` to check how to create the database and user.  
+1. Open `docs/HOW-TO-RUN-Postgres.txt` to check how to create the database and user.  
 
 2. Check if Maven is installed by running: ```mvn --version```
 If the command returns nothing, install Maven.
 On macOS, you can do this with: ```brew install maven```
 
-3. Next, open `BUILDING.md` and follow the build instructions.
+3. Then just ```nvm``` and will be created a new dir `/target`. Make sure that the `my.properties` file was proper copied into the new directory.
 
-4. Then open `HOW-TO-RUN.md` and follow the section on creating the benchmark configuration file. And go on. You’ll need to go to the target directory generated during the build process and create a `my.properties` file. Start by copying the sample file: `sample.postgresql.properties`. Edit the file and update any necessary values (for example, the database password). 
-
-    Tip: For your first run, simplify or reduce the configuration settings in your properties file to make the process faster.
+4. cd target/run
 
 ## Report Generation
 
