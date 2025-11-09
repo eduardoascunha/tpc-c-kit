@@ -74,4 +74,8 @@ measurements in a TPC-C, the end-user experienced response time at the terminal.
 Please read the [Full Architecture Description](docs/TimedDriver.md)
 for a detailed explanation of the above diagram.
 
+## Documentation
+
+For more information, you can visit	the
+[Standard specification from TPC](http://tpc.org/tpc_documents_current_versions/pdf/tpc-c_v5.11.0.pdf).
 
