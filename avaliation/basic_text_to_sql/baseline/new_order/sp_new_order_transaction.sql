@@ -658,17 +658,17 @@ $$;
 -- 1.3 - GEMINI  --
 -------------------
 -- Define the composite types for item details (required for passing array data)
-DO $$
-BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'order_item_details') THEN
-        CREATE TYPE order_item_details AS (
-            ol_i_id         INT,
-            ol_supply_w_id  INT,
-            ol_quantity     INT
-        );
-    END IF;
-END
-$$ LANGUAGE plpgsql;
+-- DO $$
+-- BEGIN
+--     IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'order_item_details') THEN
+--         CREATE TYPE order_item_details AS (
+--             ol_i_id         INT,
+--             ol_supply_w_id  INT,
+--             ol_quantity     INT
+--         );
+--     END IF;
+-- END
+-- $$ LANGUAGE plpgsql;
 
 
 -- Define the New-Order function
