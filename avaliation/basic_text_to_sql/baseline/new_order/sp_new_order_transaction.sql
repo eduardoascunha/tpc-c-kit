@@ -197,7 +197,7 @@ $$
 LANGUAGE plpgsql;
 
 ---------------------
--- 1.1 - DEEPSEEK  --
+-- 1.1 - DEEPSEEK  -- runned
 ---------------------
 -- New-Order Transaction for TPC-C
 CREATE OR REPLACE FUNCTION new_order_transaction(
@@ -439,12 +439,12 @@ $$ LANGUAGE plpgsql;
 -- 1.2 - CHATGPT  --
 --------------------
 -- 1) helper composite type to pass lines
-CREATE TYPE tpcc_new_order_line AS (
-  ol_number    integer,   -- line number within the order (1..ol_cnt)
-  ol_i_id      integer,   -- item id
-  ol_supply_w_id integer, -- supplying warehouse for this line (given by terminal)
-  ol_quantity  integer    -- quantity ordered (1..10)
-);
+-- CREATE TYPE tpcc_new_order_line AS (
+--   ol_number    integer,   -- line number within the order (1..ol_cnt)
+--   ol_i_id      integer,   -- item id
+--   ol_supply_w_id integer, -- supplying warehouse for this line (given by terminal)
+--   ol_quantity  integer    -- quantity ordered (1..10)
+-- );
 
 -- 2) function implementing the New-Order transaction
 CREATE OR REPLACE FUNCTION new_order_txn(
