@@ -264,47 +264,39 @@ END $$;
 --------------------
 -- 1.2 - CHATGPT  --
 --------------------
--- Input:
---   :w_id       -- warehouse id
---   :d_id       -- district id
---   :threshold  -- stock minimum threshold (10–20)
-
-BEGIN;
-
--- 1. Retrieve the district’s next order id
-SELECT d_next_o_id
-INTO STRICT next_o_id
-FROM district
-WHERE d_w_id = :w_id
-  AND d_id   = :d_id;
-
--- Define order range: last 20 orders
-LET lower_o_id = next_o_id - 20;
-
--- 2. Get distinct item IDs from the last 20 orders
-WITH recent_items AS (
-    SELECT DISTINCT ol_i_id
-    FROM order_line
-    WHERE ol_w_id = :w_id
-      AND ol_d_id = :d_id
-      AND ol_o_id <  next_o_id
-      AND ol_o_id >= lower_o_id
-),
-
--- 3. Count stocks below threshold for these items
-low_items AS (
-    SELECT COUNT(*) AS low_stock_count
-    FROM stock s
-    JOIN recent_items ri
-      ON s.s_i_id = ri.ol_i_id
-    WHERE s.s_w_id = :w_id
-      AND s.s_quantity < :threshold
+CREATE OR REPLACE FUNCTION tpcc_stock_level(
+    IN w_id INTEGER,
+    IN d_id INTEGER,
+    IN threshold INTEGER,
+    OUT low_stock INTEGER
 )
+LANGUAGE plpgsql AS
+$$
+DECLARE
+    next_o_id INTEGER;
+BEGIN
+    -- Step 1
+    SELECT d_next_o_id INTO next_o_id
+    FROM district
+    WHERE d_w_id = w_id AND d_id = d_id;
 
-SELECT low_stock_count
-FROM low_items;
+    WITH recent_items AS (
+        SELECT DISTINCT ol_i_id
+        FROM order_line
+        WHERE ol_w_id = w_id
+          AND ol_d_id = d_id
+          AND ol_o_id < next_o_id
+          AND ol_o_id >= next_o_id - 20
+    )
+    SELECT COUNT(*) INTO low_stock
+    FROM stock s
+    JOIN recent_items ri ON s.s_i_id = ri.ol_i_id
+    WHERE s.s_w_id = w_id
+      AND s.s_quantity < threshold;
 
-COMMIT;
+END;
+$$;
+
 
 
 -------------------
